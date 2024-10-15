@@ -7,8 +7,10 @@ const newsSchema = new mongoose.Schema({
     category: { type: String, required: true },
     publishedAt: { type: Date, required: true },
     image: { type: String },
+    userEmail: { type: String, required: true },  // New field added to track the user
+    notificationSent: { type: Boolean, default: false } 
 });
 
 const News = mongoose.model('News', newsSchema);
 
-export default News;  // Ensure you have this line
+export default News;

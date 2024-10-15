@@ -1,6 +1,7 @@
 import User from '../models/User.js'; // Use ESM import
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import nodeMailer from 'nodemailer';
 
 export const register = async (req, res) => {
     const { email, password } = req.body;
@@ -31,3 +32,11 @@ export const login = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+
+const transporter = nodeMailer.createTransport({
+    service : 'gmail',
+    auth:{
+        user : process.env.EMAIL,
+        pass: process.env.PASS
+    }
+})
