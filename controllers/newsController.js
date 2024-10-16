@@ -108,14 +108,15 @@ export const getNews = async (req, res) => {
         if (!user) return res.status(404).json({ message: 'User not found' });
 
         const userEmail = user.email; // Store user's email
-        const userCategories = user.preferences.categories;
+        const userCategories = user.preferences.categories; 
 
         console.log("Fetching news for user:", userEmail);
         console.log("User Categories:", userCategories);
 
         // Check if user has categories set in their preferences
         if (!userCategories || userCategories.length === 0) {
-            return res.status(400).json({ message: 'No categories set for user preferences.' });
+            userCategories = "general";
+            //return res.status(400).json({ message: 'No categories set for user preferences.' });
         }
 
         // Fetch news articles based on user categories
@@ -171,7 +172,7 @@ export const updatePreferences = async (req, res) => {
             {
                 preferences: {
                     categories: categories || [],
-                    frequency: frequency || 'immediate',
+                    frequency: frequency || 'daily',
                     notificationChannels: notificationChannels || ['email'], // Add this line
                 },
             },

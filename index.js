@@ -9,7 +9,7 @@ import nodemailer from 'nodemailer';
 import authRoutes from './routes/authRoutes.js';
 import newsRoutes from './routes/newsRoutes.js';
 import User from './models/User.js';
-import bodyParser from 'body-parser';
+import bodyParser from 'body-parser';   
 import { fetchAndSendNotifications } from './controllers/notificationController.js'; // Import notification logic
 
 dotenv.config();
@@ -19,7 +19,7 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors());
-app.use(bodyParser.json()); 
+app.use(bodyParser.json());
 app.use(express.json());
 
 // Routes
@@ -44,19 +44,10 @@ const connectDB = async () => {
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: process.env.EMAIL, // Use environment variables
+        user: process.env.EMAIL,
         pass: process.env.PASS,
     },
-    pool: true,  // Use pooled connections
-    rateLimit: true,  // Enable rate limiting
-    maxConnections: 5,  // Limit the number of concurrent connections
-    maxMessages: 100,  // Maximum number of messages to send in a batch
-    keepAlive: true,  // Keep the connection alive
-    connectionTimeout: 10000,  // Timeout if no response from the server in 10 seconds
-    socketTimeout: 10000,  // Socket timeout to 10 seconds
-    debug: true,  // Enable debug mode to see logs
 });
-
 
 // Function to send email
 const sendEmail = (email, subject, text) => {
@@ -97,19 +88,8 @@ const scheduleNotifications = () => {
     });
 };
 
-// Start scheduling
-// scheduleNotifications();
-//fetchAndSendNotifications('daily');
-
-// Function to test sending an email
-const testEmail = () => {
-    const testEmail = 'csgowtham2004@gmail.com'; // Change this to a valid recipient email
-    sendEmail(testEmail, 'Test Email', 'This is a test email from Nodemailer.');
-};
-
-// Call the test function
-//testEmail();
-
+// Start scheduling notifications
+scheduleNotifications();
 
 // Start Express server and Socket.IO
 const server = http.createServer(app);
@@ -137,4 +117,3 @@ const startServer = async () => {
 };
 
 startServer();
-

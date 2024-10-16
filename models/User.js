@@ -5,7 +5,7 @@ const userSchema = new mongoose.Schema({
     password: { type: String, required: true },
     preferences: {
         categories: { type: [String], default: [] }, // News categories
-        frequency: { type: String, default: 'immediate' }, // 'daily', 'weekly', 'monthly'
+        frequency: { type: String, default: 'daily' }, // 'daily', 'weekly', 'monthly'
         notificationChannels: { type: [String], default: ['email'] },
     },
     notifications: { type: [{ newsId: String, dateSent: Date }], default: [] }, // Tracks sent notifications
